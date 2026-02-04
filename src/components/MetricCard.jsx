@@ -1,4 +1,4 @@
-export default function MetricCard({ title, value, icon: Icon }) {
+export default function MetricCard({ title, value, icon: Icon, iconSrc }) {
   return (
     <div
       className="flex min-w-0 flex-1 items-center justify-between rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
@@ -11,7 +11,12 @@ export default function MetricCard({ title, value, icon: Icon }) {
           {value}
         </div>
       </div>
-      {Icon && (
+      {iconSrc && (
+        <div className="text-[var(--color-text)]">
+          <img src={iconSrc} alt="" className="h-8 w-8 object-contain" />
+        </div>
+      )}
+      {!iconSrc && Icon && (
         <div className="text-[var(--color-text)]">
           <Icon className="h-8 w-8" />
         </div>

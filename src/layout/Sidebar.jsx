@@ -1,20 +1,18 @@
 import { NavLink } from 'react-router-dom'
-import {
-  IconHouse,
-  IconUser,
-  IconWhiskey,
-  IconUsers,
-  IconCertificate,
-  IconSettings,
-} from '../components/icons'
+import dashboardImg from '../assets/icons/dashboard.png'
+import memberManagementImg from '../assets/icons/member-management.png'
+import totalBourbonsImg from '../assets/icons/total-bourbons.png'
+import staffImg from '../assets/icons/staff.png'
+import drinkManagementImg from '../assets/icons/drink-management.png'
+import settingsImg from '../assets/icons/settings.png'
 
 const navItems = [
-  { to: '/dashboard', label: 'Dashboard', icon: IconHouse },
-  { to: '/member-management', label: 'Member Management', icon: IconUser },
-  { to: '/whiskey-management', label: 'Whiskey Management', icon: IconWhiskey },
-  { to: '/staff-management', label: 'Staff Management', icon: IconUsers },
-  { to: '/content-management', label: 'Content Management', icon: IconCertificate },
-  { to: '/settings', label: 'Settings', icon: IconSettings },
+  { to: '/dashboard', label: 'Dashboard', iconSrc: dashboardImg },
+  { to: '/member-management', label: 'Member Management', iconSrc: memberManagementImg },
+  { to: '/whiskey-management', label: 'Whiskey Management', iconSrc: totalBourbonsImg },
+  { to: '/staff-management', label: 'Staff Management', iconSrc: staffImg },
+  { to: '/content-management', label: 'Content Management', iconSrc: drinkManagementImg },
+  { to: '/settings', label: 'Settings', iconSrc: settingsImg },
 ]
 
 export default function Sidebar() {
@@ -24,7 +22,7 @@ export default function Sidebar() {
       style={{ minHeight: 0 }}
     >
       <nav className="flex flex-col gap-1">
-        {navItems.map(({ to, label, icon: Icon }) => (
+        {navItems.map(({ to, label, iconSrc }) => (
           <NavLink
             key={to}
             to={to}
@@ -36,7 +34,7 @@ export default function Sidebar() {
               }`
             }
           >
-            <Icon className="h-5 w-5 shrink-0" />
+            <img src={iconSrc} alt="" className="h-5 w-5 shrink-0 object-contain" />
             {label}
           </NavLink>
         ))}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { IconSearch, IconRefresh } from '../components/icons'
+import { IconSearch } from '../components/icons'
+import loadImg from '../assets/icons/load.png'
 import Calendar from '../components/Calendar'
 
 const MOCK_BOURBONS = [
@@ -149,6 +150,8 @@ function CustomDropdown({ id, label, value, onChange, options, openDropdown, set
   )
 }
 
+
+
 export default function WhiskeyManagement() {
   const [activeTab, setActiveTab] = useState('all')
   const [search, setSearch] = useState('')
@@ -196,13 +199,15 @@ export default function WhiskeyManagement() {
     return `${months[Number(m) - 1]} ${Number(d)}, ${y}`
   }
 
+  const tabActiveBg = '#A7935E'
+  const filterBorder = '#646940'
+
   return (
     <div className="flex flex-col">
-      <h1 className="mb-4 shrink-0 text-2xl font-bold tracking-tight text-[var(--color-text-strong)]">
+      <h1 className="mb-4 shrink-0 border-b-2 border-[#2563eb] pb-1 text-2xl font-bold tracking-tight text-[var(--color-text-strong)]">
         Whiskey Management
       </h1>
 
-      {/* Tabs: All Bourbons | Create Bourbon | Whiskey of the Month */}
       <div className="mb-4 flex shrink-0 gap-2">
         {TABS.map((tab) => (
           <button
@@ -211,16 +216,16 @@ export default function WhiskeyManagement() {
             onClick={() => setActiveTab(tab.id)}
             className={`rounded-[var(--radius-md)] px-4 py-2.5 text-sm font-medium transition-colors ${
               activeTab === tab.id
-                ? 'bg-[var(--color-sidebar-active)] text-[var(--color-text-strong)]'
+                ? 'text-white'
                 : 'border border-[var(--color-border)] bg-white text-[var(--color-text-strong)] hover:bg-[#F4F4F4]'
             }`}
+            style={activeTab === tab.id ? { backgroundColor: tabActiveBg } : undefined}
           >
             {tab.label}
           </button>
         ))}
       </div>
 
-      {/* All Bourbons: search, filters, table */}
       {activeTab === 'all' && (
         <>
           <div className="mb-4 flex shrink-0 flex-wrap items-center gap-3">
@@ -231,13 +236,19 @@ export default function WhiskeyManagement() {
                 placeholder="Search Whiskey"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white py-2.5 pl-10 pr-4 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+                className="w-full rounded-[var(--radius-md)] border bg-white py-2.5 pl-10 pr-4 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#646940]"
+                style={{ borderColor: filterBorder }}
               />
             </div>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 py-2.5 pr-8 text-sm font-medium text-[var(--color-text-strong)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+              className="rounded-[var(--radius-md)] border px-4 py-2.5 pr-8 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#646940]"
+              style={{
+                borderColor: filterBorder,
+                backgroundColor: category ? filterBorder : 'white',
+                color: category ? 'white' : undefined,
+              }}
             >
               <option value="">CATEGORY</option>
               <option value="signature">Signature</option>
@@ -247,7 +258,12 @@ export default function WhiskeyManagement() {
             <select
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 py-2.5 pr-8 text-sm font-medium text-[var(--color-text-strong)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+              className="rounded-[var(--radius-md)] border px-4 py-2.5 pr-8 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#646940]"
+              style={{
+                borderColor: filterBorder,
+                backgroundColor: age ? filterBorder : 'white',
+                color: age ? 'white' : undefined,
+              }}
             >
               <option value="">AGE</option>
               <option value="4">4</option>
@@ -258,7 +274,12 @@ export default function WhiskeyManagement() {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 py-2.5 pr-8 text-sm font-medium text-[var(--color-text-strong)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+              className="rounded-[var(--radius-md)] border px-4 py-2.5 pr-8 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#646940]"
+              style={{
+                borderColor: filterBorder,
+                backgroundColor: status ? filterBorder : 'white',
+                color: status ? 'white' : undefined,
+              }}
             >
               <option value="">STATUS</option>
               <option value="in-stock">In Stock</option>
@@ -266,17 +287,18 @@ export default function WhiskeyManagement() {
             </select>
             <button
               type="button"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--color-text)] hover:bg-[#F4F4F4] transition-colors"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white text-[var(--color-text)] hover:bg-[#F4F4F4] transition-colors"
+              style={{ borderColor: filterBorder }}
               aria-label="Refresh"
             >
-              <IconRefresh className="h-5 w-5" />
+              <img src={loadImg} alt="" className="h-5 w-5 shrink-0 object-contain" />
             </button>
           </div>
 
-          <div className="min-w-0 shrink-0 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white">
+          <div className="min-w-0 shrink-0 overflow-x-auto rounded-[var(--radius-lg)]">
             <table className="w-full min-w-[600px] border-collapse text-left text-sm">
               <thead>
-                <tr className="border-b border-[var(--color-border)]">
+                <tr className="bg-[#F4F4F4]">
                   <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Name</th>
                   <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Category</th>
                   <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Age</th>
@@ -289,7 +311,8 @@ export default function WhiskeyManagement() {
                 {filteredBourbons.map((row) => (
                   <tr
                     key={row.id}
-                    className="border-b border-[var(--color-border)] last:border-b-0 hover:bg-[#FAFAFA] transition-colors"
+                    className="transition-colors hover:opacity-95"
+                    style={{ backgroundColor: '#F5F5F5', borderBottom: '1px solid #D0D0D0' }}
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
@@ -305,7 +328,8 @@ export default function WhiskeyManagement() {
                     <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.age}</td>
                     <td className="px-4 py-3 text-[var(--color-text-strong)]">${row.price.toFixed(2)}</td>
                     <td className="px-4 py-3">
-                      <span className="inline-flex items-center rounded-full bg-[#EFB9B9] px-3 py-1 text-xs font-medium text-red-800">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFC1C1] px-3 py-1 text-xs font-medium text-red-800">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#b91c1c]" aria-hidden />
                         {row.status}
                       </span>
                     </td>
@@ -601,10 +625,10 @@ export default function WhiskeyManagement() {
           {/* Scheduled */}
           <div className="shrink-0">
             <h2 className="mb-3 text-base font-bold text-[var(--color-text-strong)]">Scheduled</h2>
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white">
+            <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-white">
               <table className="w-full min-w-[400px] border-collapse text-left text-sm">
                 <thead>
-                  <tr className="border-b border-[var(--color-border)] bg-[#F4F4F4]">
+                  <tr className="bg-[#F4F4F4]">
                     <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Name</th>
                     <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Month</th>
                     <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Date</th>
@@ -613,7 +637,7 @@ export default function WhiskeyManagement() {
                 </thead>
                 <tbody>
                   {scheduledWom.map((row) => (
-                    <tr key={row.id} className="border-b border-[var(--color-border)] last:border-b-0 hover:bg-[#FAFAFA]">
+                    <tr key={row.id} className="hover:bg-[#FAFAFA]">
                       <td className="px-4 py-3 font-medium text-[var(--color-text-strong)]">{row.name}</td>
                       <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.month}</td>
                       <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.date}</td>
@@ -632,10 +656,10 @@ export default function WhiskeyManagement() {
           {/* History */}
           <div className="shrink-0">
             <h2 className="mb-3 text-base font-bold text-[var(--color-text-strong)]">History</h2>
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white">
+            <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-white">
               <table className="w-full min-w-[400px] border-collapse text-left text-sm">
                 <thead>
-                  <tr className="border-b border-[var(--color-border)] bg-[#F4F4F4]">
+                  <tr className="bg-[#F4F4F4]">
                     <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Name</th>
                     <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Month</th>
                     <th className="px-4 py-3 font-bold uppercase tracking-wide text-[var(--color-text-strong)]">Date</th>
@@ -644,7 +668,7 @@ export default function WhiskeyManagement() {
                 </thead>
                 <tbody>
                   {historyWom.map((row) => (
-                    <tr key={row.id} className="border-b border-[var(--color-border)] last:border-b-0 hover:bg-[#FAFAFA]">
+                    <tr key={row.id} className="hover:bg-[#FAFAFA]">
                       <td className="px-4 py-3 font-medium text-[var(--color-text-strong)]">{row.name}</td>
                       <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.month}</td>
                       <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.date}</td>

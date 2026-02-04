@@ -1,16 +1,14 @@
-import {
-  IconWhiskey,
-  IconBasket,
-  IconAlertCircle,
-  IconStar,
-} from '../components/icons'
+import { IconBasket } from '../components/icons'
+import totalBourbonsImg from '../assets/icons/total-bourbons.png'
+import outOfStockImg from '../assets/icons/out of stock.png'
+import starImg from '../assets/icons/Star.png'
 import MetricCard from '../components/MetricCard'
 
 const cards = [
-  { title: 'Total Bourbons', value: '156', icon: IconWhiskey },
+  { title: 'Total Bourbons', value: '156', iconSrc: totalBourbonsImg },
   { title: 'In Stock', value: '150', icon: IconBasket },
-  { title: 'Out of Stock', value: '4', icon: IconAlertCircle },
-  { title: 'Customers at 90%', value: '10', icon: IconStar },
+  { title: 'Out of Stock', value: '4', iconSrc: outOfStockImg },
+  { title: 'Customers at 90%', value: '10', iconSrc: starImg },
 ]
 
 export default function Dashboard() {
@@ -23,6 +21,7 @@ export default function Dashboard() {
             title={card.title}
             value={card.value}
             icon={card.icon}
+            iconSrc={card.iconSrc}
           />
         ))}
       </div>
