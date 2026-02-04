@@ -18,8 +18,10 @@ const STATUS_STYLES = {
   Paused: 'bg-[#EAF4FE] text-blue-800',
 }
 
-const tabActiveBg = '#A7935E' // gold/brown for selected tab
-const tabInactiveBorder = '#E0E0E0'
+// Match image: earthy brown/gold for active & borders; light beige for inactive
+const tabActiveBg = '#A58A4A'
+const tabInactiveBg = '#F8F8F8'
+const addStaffBg = '#D3D3D3'
 
 export default function StaffManagement() {
   const [search, setSearch] = useState('')
@@ -41,39 +43,42 @@ export default function StaffManagement() {
 
   return (
     <div className="flex flex-col">
-      <h1 className="mb-4 shrink-0 text-2xl font-bold tracking-tight text-[var(--color-text-strong)]">
-        Staff Management
-      </h1>
-
-      <div className="mb-4 flex shrink-0 flex-wrap items-center gap-3">
-        <div className="relative min-w-0 flex-1" style={{ minWidth: 200 }}>
-          <IconSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text)]" />
-          <input
-            type="search"
-            placeholder="Search staff..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white py-2.5 pl-10 pr-4 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
-          />
-        </div>
+      {/* Row 1: Title (left) + Add New Staff (right) */}
+      <div className="mb-4 flex shrink-0 items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold tracking-tight text-black">
+          Staff Management
+        </h1>
         <button
           type="button"
-          className="flex shrink-0 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[#F4F4F4] px-4 py-2.5 text-sm font-medium text-[var(--color-text-strong)] transition-colors hover:bg-[#E8E8E8]"
+          className="flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-[#333] transition-colors hover:opacity-90"
+          style={{ backgroundColor: addStaffBg }}
         >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
+          <span className="text-lg leading-none">+</span>
           Add New Staff
         </button>
+      </div>
+
+      {/* Row 2: Search bar + filter tabs + refresh */}
+      <div className="mb-4 flex shrink-0 flex-wrap items-center gap-3">
+        <div className="relative min-w-0 flex-1" style={{ minWidth: 220 }}>
+          <IconSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#9CA3AF]" />
+          <input
+            type="search"
+            placeholder="Search drinks..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full rounded-xl border border-[#E5E7EB] bg-white py-2.5 pl-10 pr-4 text-sm text-[#111] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-1 focus:ring-[#A58A4A]"
+          />
+        </div>
         <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
             onClick={() => setStatusTab('all')}
-            className="rounded-[var(--radius-md)] border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
+            className="rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
             style={{
-              borderColor: statusTab === 'all' ? tabActiveBg : tabInactiveBorder,
-              backgroundColor: statusTab === 'all' ? tabActiveBg : '#F4F4F4',
-              color: statusTab === 'all' ? 'white' : 'var(--color-text-strong)',
+              borderColor: tabActiveBg,
+              backgroundColor: statusTab === 'all' ? tabActiveBg : tabInactiveBg,
+              color: statusTab === 'all' ? 'white' : '#333',
             }}
           >
             All ({counts.all})
@@ -81,11 +86,11 @@ export default function StaffManagement() {
           <button
             type="button"
             onClick={() => setStatusTab('active')}
-            className="rounded-[var(--radius-md)] border px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[#E8E8E8]"
+            className="rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
             style={{
-              borderColor: tabInactiveBorder,
-              backgroundColor: statusTab === 'active' ? tabActiveBg : '#F4F4F4',
-              color: statusTab === 'active' ? 'white' : 'var(--color-text-strong)',
+              borderColor: tabActiveBg,
+              backgroundColor: statusTab === 'active' ? tabActiveBg : tabInactiveBg,
+              color: statusTab === 'active' ? 'white' : '#333',
             }}
           >
             Active ({counts.active})
@@ -93,11 +98,11 @@ export default function StaffManagement() {
           <button
             type="button"
             onClick={() => setStatusTab('blocked')}
-            className="rounded-[var(--radius-md)] border px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[#E8E8E8]"
+            className="rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
             style={{
-              borderColor: tabInactiveBorder,
-              backgroundColor: statusTab === 'blocked' ? tabActiveBg : '#F4F4F4',
-              color: statusTab === 'blocked' ? 'white' : 'var(--color-text-strong)',
+              borderColor: tabActiveBg,
+              backgroundColor: statusTab === 'blocked' ? tabActiveBg : tabInactiveBg,
+              color: statusTab === 'blocked' ? 'white' : '#333',
             }}
           >
             Blocked ({counts.blocked})
@@ -105,7 +110,8 @@ export default function StaffManagement() {
         </div>
         <button
           type="button"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[#F4F4F4] text-[var(--color-text)] transition-colors hover:bg-[#E8E8E8]"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border text-[#333] transition-colors hover:opacity-90"
+          style={{ borderColor: tabActiveBg, backgroundColor: tabInactiveBg }}
           aria-label="Refresh"
         >
           <img src={loadImg} alt="" className="h-5 w-5 shrink-0 object-contain" />
@@ -138,7 +144,18 @@ export default function StaffManagement() {
                 <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.role}</td>
                 <td className="px-4 py-3">
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${STATUS_STYLES[row.status] ?? 'bg-[#E0E0E0] text-[var(--color-text-strong)]'}`}
+                    className={`inline-flex items-center justify-center text-xs font-medium ${STATUS_STYLES[row.status] ?? 'bg-[#E0E0E0] text-[var(--color-text-strong)]'}`}
+                    style={{
+                      width: 120,
+                      height: 40,
+                      gap: 4,
+                      borderRadius: 22,
+                      paddingTop: 8,
+                      paddingRight: 14,
+                      paddingBottom: 8,
+                      paddingLeft: 14,
+                      opacity: 1,
+                    }}
                   >
                     {row.status}
                   </span>
