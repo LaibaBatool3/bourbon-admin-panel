@@ -29,10 +29,12 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-[var(--radius-md)] px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-[var(--color-sidebar-active)] text-[var(--color-text-strong)]'
-                  : 'text-[var(--color-text)] hover:bg-[var(--color-sidebar-active)]'
-              }`
-            }
+                  ? 'text-[var(--color-text-strong)]'
+                  : 'text-[var(--color-text)] hover:bg-[#EBE9D6]'
+              }`}
+            style={({ isActive }) => ({
+              backgroundColor: isActive ? '#EBE9D6' : 'transparent',
+            })}
           >
             <img src={iconSrc} alt="" className="h-5 w-5 shrink-0 object-contain" />
             {label}
