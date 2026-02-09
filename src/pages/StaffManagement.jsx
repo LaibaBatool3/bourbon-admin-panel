@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { IconSearch, IconUser } from '../components/icons'
+import { IconSearch } from '../components/icons'
+import hugeIcon from '../assets/icons/huge-icon.png'
 import loadImg from '../assets/icons/load.png'
 
 const MOCK_STAFF = [
@@ -18,10 +19,9 @@ const STATUS_STYLES = {
   Paused: 'bg-[#EAF4FE] text-blue-800',
 }
 
-// Match image: earthy brown/gold for active & borders; light beige for inactive
-const tabActiveBg = '#A58A4A'
+// Match Figma: brown/gold for active filter; olive for Add button
+const tabActiveBg = '#A68B4A'
 const tabInactiveBg = '#F8F8F8'
-const addStaffBg = '#D3D3D3'
 
 export default function StaffManagement() {
   const [search, setSearch] = useState('')
@@ -50,8 +50,8 @@ export default function StaffManagement() {
         </h1>
         <button
           type="button"
-          className="flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-[#333] transition-colors hover:opacity-90"
-          style={{ backgroundColor: addStaffBg }}
+          className="flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-white transition-colors hover:opacity-90"
+          style={{ backgroundColor: '#646940' }}
         >
           <span className="text-lg leading-none">+</span>
           Add New Staff
@@ -64,7 +64,7 @@ export default function StaffManagement() {
           <IconSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#9CA3AF]" />
           <input
             type="search"
-            placeholder="Search drinks..."
+            placeholder="Search staff..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-xl border border-[#E5E7EB] bg-white py-2.5 pl-10 pr-4 text-sm text-[#111] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-1 focus:ring-[#A58A4A]"
@@ -74,7 +74,7 @@ export default function StaffManagement() {
           <button
             type="button"
             onClick={() => setStatusTab('all')}
-            className="rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
+            className="h-10 shrink-0 rounded-xl border px-4 py-2 text-sm font-medium transition-colors hover:opacity-90"
             style={{
               borderColor: tabActiveBg,
               backgroundColor: statusTab === 'all' ? tabActiveBg : tabInactiveBg,
@@ -86,7 +86,7 @@ export default function StaffManagement() {
           <button
             type="button"
             onClick={() => setStatusTab('active')}
-            className="rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
+            className="h-10 shrink-0 rounded-xl border px-4 py-2 text-sm font-medium transition-colors hover:opacity-90"
             style={{
               borderColor: tabActiveBg,
               backgroundColor: statusTab === 'active' ? tabActiveBg : tabInactiveBg,
@@ -98,7 +98,7 @@ export default function StaffManagement() {
           <button
             type="button"
             onClick={() => setStatusTab('blocked')}
-            className="rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors hover:opacity-90"
+            className="h-10 shrink-0 rounded-xl border px-4 py-2 text-sm font-medium transition-colors hover:opacity-90"
             style={{
               borderColor: tabActiveBg,
               backgroundColor: statusTab === 'blocked' ? tabActiveBg : tabInactiveBg,
@@ -118,7 +118,7 @@ export default function StaffManagement() {
         </button>
       </div>
 
-      <div className="min-w-0 shrink-0 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white">
+      <div className="min-w-0 shrink-0 overflow-x-auto rounded-[var(--radius-lg)] bg-white">
         <table className="w-full min-w-[500px] border-collapse text-left text-sm">
           <thead>
             <tr className="bg-[#F4F4F4]">
@@ -133,11 +133,10 @@ export default function StaffManagement() {
               <tr
                 key={row.id}
                 className="transition-colors hover:bg-[#FAFAFA]"
-                style={{ borderBottom: '1px solid #E8E8E8' }}
               >
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <IconUser className="h-4 w-4 shrink-0 text-[var(--color-text)]" />
+                    <img src={hugeIcon} alt="" className="h-4 w-4 shrink-0 object-contain" />
                     <span className="font-medium text-[var(--color-text-strong)]">{row.name}</span>
                   </div>
                 </td>
