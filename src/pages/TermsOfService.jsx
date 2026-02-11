@@ -38,6 +38,9 @@ export default function TermsOfService() {
           <p className="mb-2 text-sm leading-relaxed text-[var(--color-text-strong)]">
             You agree to:
           </p>
+          <p className='mb-2 text-lg font-vold'>
+
+          </p>
           <ul className="list-disc space-y-1 pl-6 text-sm leading-relaxed text-[var(--color-text-strong)]">
             <li>Use the platform only for lawful purposes</li>
             <li>Not attempt to hack, reverse engineer, or disrupt the system</li>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Calendar from '../components/Calendar'
+import uploadImg from '../assets/icons/upload.png'
 
 const inputClass = 'w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-3 py-2.5 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]'
 const dateInputClass = 'w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white py-2.5 pl-3 pr-10 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]'
@@ -10,8 +11,11 @@ function formatDisplayDate(iso) {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   return `${months[Number(m) - 1]} ${Number(d)}, ${y}`
 }
-const primaryBtnClass = 'rounded-[var(--radius-md)] px-4 py-2.5 text-sm font-medium text-white hover:opacity-90 transition-colors'
-const secondaryBtnClass = 'rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--color-text-strong)] hover:bg-[#F4F4F4] transition-colors'
+// Add button: ~110px wide, 38px high, left-aligned
+const addBtnClass = 'min-w-[110px] h-10 rounded-[var(--radius-md)] px-4 text-sm font-medium text-white hover:opacity-90 transition-colors'
+// Edit/Cancel: ~65px wide, 30px high, stacked vertically, right-aligned
+const editBtnClass = 'h-8 min-w-[65px] rounded-[var(--radius-md)] px-3 text-sm font-medium text-white hover:opacity-90 transition-colors'
+const cancelBtnClass = 'h-8 min-w-[65px] rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[#E8E8E8] px-3 text-sm font-medium text-[var(--color-text-strong)] hover:bg-[#E0E0E0] transition-colors'
 
 // Dark greenish-brown for Add / Edit
 const primaryColor = '#5C4033'
@@ -31,11 +35,7 @@ function UploadZone({ label, copyLabel }) {
       className="flex min-h-[200px] flex-1 flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--color-border)] bg-[#FAFAFA] p-6"
       style={{ borderColor: '#D0D0D0' }}
     >
-      <svg className="h-12 w-12 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7" />
-      </svg>
+      <img src={uploadImg} alt="" className="h-12 w-12 object-contain" />
       <p className="text-sm font-medium text-[var(--color-text-strong)]">{label}</p>
       <p className="text-sm text-[var(--color-text)]">OR</p>
       <button type="button" className="text-sm font-medium text-[var(--color-text-strong)] underline hover:no-underline">
@@ -102,7 +102,7 @@ function ContentSectionCard({ title, subtitle, uploadLabel, copyLabel, onSubmit,
           <button
             type="button"
             onClick={handleSubmit}
-            className={`w-fit ${primaryBtnClass}`}
+            className={addBtnClass}
             style={{ backgroundColor: primaryColor }}
           >
             Add
@@ -232,7 +232,7 @@ function EventsAnnouncementsSection() {
           />
         </div>
 
-        <button type="submit" className={`w-fit ${primaryBtnClass}`} style={{ backgroundColor: primaryColor }}>
+        <button type="submit" className={addBtnClass} style={{ backgroundColor: primaryColor }}>
           Add
         </button>
       </form>
@@ -257,11 +257,11 @@ function CurrentCardList({ cards, onEdit, onCancel }) {
             <div className="font-bold text-[var(--color-text-strong)]">{card.title}</div>
             <div className="text-sm text-[var(--color-text)]">{card.description}</div>
           </div>
-          <div className="flex shrink-0 gap-2">
-            <button type="button" onClick={() => onEdit(card.id)} className={primaryBtnClass} style={{ backgroundColor: primaryColor }}>
+          <div className="flex shrink-0 flex-col items-end gap-1">
+            <button type="button" onClick={() => onEdit(card.id)} className={editBtnClass} style={{ backgroundColor: primaryColor }}>
               Edit
             </button>
-            <button type="button" onClick={() => onCancel(card.id)} className={secondaryBtnClass}>
+            <button type="button" onClick={() => onCancel(card.id)} className={cancelBtnClass}>
               Cancel
             </button>
           </div>
@@ -362,7 +362,7 @@ function DailySpecialsSection() {
             </>
           )}
         </div>
-        <button type="submit" className={`w-fit ${primaryBtnClass}`} style={{ backgroundColor: primaryColor }}>
+        <button type="submit" className={addBtnClass} style={{ backgroundColor: primaryColor }}>
           Add
         </button>
       </form>

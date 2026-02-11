@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { IconSearch } from '../components/icons'
 import loadImg from '../assets/icons/load.png'
+import uploadImg from '../assets/icons/upload.png'
+import imageImg from '../assets/icons/Image.png'
 import Calendar from '../components/Calendar'
 
 const MOCK_BOURBONS = [
@@ -191,6 +193,8 @@ export default function WhiskeyManagement() {
 
   const toggleClasses = 'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-0 transition-colors focus:outline-none focus:ring-2 focus:ring-[#6D6D6D] focus:ring-offset-2'
   const toggleKnobClasses = 'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow ring-0 transition'
+  const toggleOnBg = '#22c55e'
+  const toggleOffBg = '#D0D0D0'
 
   const formatWomDate = (iso) => {
     if (!iso) return ''
@@ -199,36 +203,36 @@ export default function WhiskeyManagement() {
     return `${months[Number(m) - 1]} ${Number(d)}, ${y}`
   }
 
-  const tabActiveBg = '#A7935E'
-  const filterBorder = '#646940'
+  const tabActiveBg = '#AA9456'
 
   return (
     <div className="flex flex-col">
-      <h1 className="mb-4 shrink-0 border-b-2 border-[#2563eb] pb-1 text-2xl font-bold tracking-tight text-[var(--color-text-strong)]">
+      <h1 className="mb-4 shrink-0 text-2xl font-bold tracking-tight text-[var(--color-text-strong)]">
         Whiskey Management
       </h1>
 
-      <div className="mb-4 flex shrink-0 gap-2">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveTab(tab.id)}
-            className={`rounded-[var(--radius-md)] px-4 py-2.5 text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? 'text-white'
-                : 'border border-[var(--color-border)] bg-white text-[var(--color-text-strong)] hover:bg-[#F4F4F4]'
-            }`}
-            style={activeTab === tab.id ? { backgroundColor: tabActiveBg } : undefined}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      <div className="rounded-[var(--radius-lg)] bg-[#F0F0F0] p-4">
+        <div className="mb-4 flex w-full shrink-0 gap-3">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              className={`h-10 flex-1 rounded-[var(--radius-md)] px-4 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#AA9456] focus-visible:ring-offset-1 ${
+                activeTab === tab.id
+                  ? 'text-white'
+                  : 'border border-[#D0D0D0] bg-white text-[var(--color-text-strong)] hover:bg-[#F4F4F4]'
+              }`}
+              style={activeTab === tab.id ? { backgroundColor: tabActiveBg } : undefined}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
       {activeTab === 'all' && (
         <>
-          <div className="mb-4 flex shrink-0 flex-wrap items-center gap-3">
+          <div className="mb-4 flex shrink-0 items-center gap-3">
             <div className="relative min-w-0 flex-1" style={{ minWidth: 200 }}>
               <IconSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text)]" />
               <input
@@ -236,63 +240,48 @@ export default function WhiskeyManagement() {
                 placeholder="Search Whiskey"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-[var(--radius-md)] border bg-white py-2.5 pl-10 pr-4 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#646940]"
-                style={{ borderColor: filterBorder }}
+                className="w-full rounded-[var(--radius-md)] border border-[#333333] bg-white py-2.5 pl-10 pr-4 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
               />
             </div>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="rounded-[var(--radius-md)] border px-4 py-2.5 pr-8 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#646940]"
-              style={{
-                borderColor: filterBorder,
-                backgroundColor: category ? filterBorder : 'white',
-                color: category ? 'white' : undefined,
-              }}
-            >
-              <option value="">CATEGORY</option>
-              <option value="signature">Signature</option>
-              <option value="single-barrel">Single Barrel</option>
-              <option value="small-batch">Small Batch</option>
-            </select>
-            <select
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              className="rounded-[var(--radius-md)] border px-4 py-2.5 pr-8 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#646940]"
-              style={{
-                borderColor: filterBorder,
-                backgroundColor: age ? filterBorder : 'white',
-                color: age ? 'white' : undefined,
-              }}
-            >
-              <option value="">AGE</option>
-              <option value="4">4</option>
-              <option value="6">6</option>
-              <option value="8">8</option>
-              <option value="10">10</option>
-            </select>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="rounded-[var(--radius-md)] border px-4 py-2.5 pr-8 text-sm font-medium focus:outline-none focus:ring-1 focus:ring-[#646940]"
-              style={{
-                borderColor: filterBorder,
-                backgroundColor: status ? filterBorder : 'white',
-                color: status ? 'white' : undefined,
-              }}
-            >
-              <option value="">STATUS</option>
-              <option value="in-stock">In Stock</option>
-              <option value="out-of-stock">Out of Stock</option>
-            </select>
-            <button
-              type="button"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white text-[var(--color-text)] hover:bg-[#F4F4F4] transition-colors"
-              style={{ borderColor: filterBorder }}
-              aria-label="Refresh"
-            >
-              <img src={loadImg} alt="" className="h-5 w-5 shrink-0 object-contain" />
-            </button>
+            <div className="flex shrink-0 items-center gap-2">
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="h-10 min-w-[95px] rounded-[var(--radius-md)] border border-[#333333] bg-white px-3 pr-8 text-sm font-medium text-[#333333] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+              >
+                <option value="">CATEGORY</option>
+                <option value="signature">Signature</option>
+                <option value="single-barrel">Single Barrel</option>
+                <option value="small-batch">Small Batch</option>
+              </select>
+              <select
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                className="h-10 min-w-[95px] rounded-[var(--radius-md)] border border-[#333333] bg-white px-3 pr-8 text-sm font-medium text-[#333333] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+              >
+                <option value="">AGE</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+              </select>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="h-10 min-w-[95px] rounded-[var(--radius-md)] border border-[#333333] bg-white px-3 pr-8 text-sm font-medium text-[#333333] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+              >
+                <option value="">STATUS</option>
+                <option value="in-stock">In Stock</option>
+                <option value="out-of-stock">Out of Stock</option>
+              </select>
+              <button
+                type="button"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#333333] bg-white text-[#333333] transition-colors hover:bg-[#F4F4F4]"
+                aria-label="Refresh"
+              >
+                <img src={loadImg} alt="" className="h-5 w-5 shrink-0 object-contain" />
+              </button>
+            </div>
           </div>
 
           <div className="min-w-0 shrink-0 overflow-x-auto rounded-[var(--radius-lg)]">
@@ -311,8 +300,8 @@ export default function WhiskeyManagement() {
                 {filteredBourbons.map((row) => (
                   <tr
                     key={row.id}
-                    className="transition-colors hover:opacity-95"
-                    style={{ backgroundColor: '#F5F5F5', borderBottom: '1px solid #D0D0D0' }}
+                    className="bg-white transition-colors hover:bg-[#FAFAFA]"
+                    style={{ borderBottom: '1px solid #E8E8E8' }}
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
@@ -328,7 +317,7 @@ export default function WhiskeyManagement() {
                     <td className="px-4 py-3 text-[var(--color-text-strong)]">{row.age}</td>
                     <td className="px-4 py-3 text-[var(--color-text-strong)]">${row.price.toFixed(2)}</td>
                     <td className="px-4 py-3">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFC1C1] px-3 py-1 text-xs font-medium text-red-800">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFCCCC] px-3 py-1 text-xs font-medium text-red-800">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#b91c1c]" aria-hidden />
                         {row.status}
                       </span>
@@ -354,8 +343,8 @@ export default function WhiskeyManagement() {
         </>
       )}
 
-      {/* Create Bourbon: form (left) + Label upload (right) */}
-      {activeTab === 'create' && (
+        {/* Create Bourbon: form (left) + Label upload (right) */}
+        {activeTab === 'create' && (
         <div className="flex min-w-0 flex-1 gap-6">
           {/* Whiskey details form */}
           <div className="flex min-w-0 flex-1 flex-col gap-4">
@@ -436,55 +425,63 @@ export default function WhiskeyManagement() {
               />
             </div>
 
-            {/* On sale toggle + Discount value */}
-            <div className="flex items-center gap-3">
+            {/* On sale: label above, toggle below */}
+            <div className="flex flex-col gap-2">
               <span className="text-sm font-medium text-[var(--color-text-strong)]">On sale</span>
               <button
                 type="button"
                 role="switch"
                 aria-checked={onSale}
                 onClick={() => setOnSale((v) => !v)}
-                className={`${toggleClasses} ${onSale ? 'bg-green-500' : 'bg-[var(--color-border)]'}`}
+                className={`w-fit ${toggleClasses}`}
+                style={{ backgroundColor: onSale ? toggleOnBg : toggleOffBg }}
               >
                 <span className={`${toggleKnobClasses} translate-y-0.5 ${onSale ? 'translate-x-5' : 'translate-x-0.5'}`} />
               </button>
             </div>
             {onSale && (
-              <div>
+              <div className="rounded-[var(--radius-md)] bg-[#F5F5F5] p-3">
                 <label className="mb-1 block text-sm font-medium text-[var(--color-text-strong)]">Discount value</label>
                 <input
                   type="text"
                   value={form.discountValue}
                   onChange={(e) => setForm((f) => ({ ...f, discountValue: e.target.value }))}
                   placeholder="XXXXXXXXXXXXX"
-                  className={inputBaseClass}
+                  className="w-full rounded-[var(--radius-md)] border bg-white px-3 py-2.5 text-sm text-[var(--color-text-strong)] placeholder:text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[#6D6D6D]"
+                  style={{ borderColor: '#D9D9D999' }}
                 />
               </div>
             )}
 
-            {/* Exclusive Bourbons toggle */}
-            <div className="flex items-center gap-3">
+            {/* Exclusive Bourbons: label above, toggle below, then checkbox */}
+            <div className="flex flex-col gap-2">
               <span className="text-sm font-medium text-[var(--color-text-strong)]">Exclusive Bourbons</span>
               <button
                 type="button"
                 role="switch"
                 aria-checked={exclusiveBourbons}
                 onClick={() => setExclusiveBourbons((v) => !v)}
-                className={`${toggleClasses} ${exclusiveBourbons ? 'bg-green-500' : 'bg-[var(--color-border)]'}`}
+                className={`w-fit ${toggleClasses}`}
+                style={{ backgroundColor: exclusiveBourbons ? toggleOnBg : toggleOffBg }}
               >
                 <span className={`${toggleKnobClasses} translate-y-0.5 ${exclusiveBourbons ? 'translate-x-5' : 'translate-x-0.5'}`} />
               </button>
             </div>
+            <label className="flex cursor-pointer items-center gap-2">
+              <input type="checkbox" className="h-4 w-4 rounded border-[var(--color-border)]" />
+              <span className="text-sm text-[var(--color-text-strong)]">Notify all members</span>
+            </label>
 
-            {/* Whiskey of the Month toggle */}
-            <div className="flex items-center gap-3">
+            {/* Whiskey of the Month: label above, toggle below */}
+            <div className="flex flex-col gap-2">
               <span className="text-sm font-medium text-[var(--color-text-strong)]">Whiskey of the Month</span>
               <button
                 type="button"
                 role="switch"
                 aria-checked={whiskeyOfMonth}
                 onClick={() => setWhiskeyOfMonth((v) => !v)}
-                className={`${toggleClasses} ${whiskeyOfMonth ? 'bg-green-500' : 'bg-[var(--color-border)]'}`}
+                className={`w-fit ${toggleClasses}`}
+                style={{ backgroundColor: whiskeyOfMonth ? toggleOnBg : toggleOffBg }}
               >
                 <span className={`${toggleKnobClasses} translate-y-0.5 ${whiskeyOfMonth ? 'translate-x-5' : 'translate-x-0.5'}`} />
               </button>
@@ -494,7 +491,7 @@ export default function WhiskeyManagement() {
               type="button"
               onClick={() => {}}
               className="mt-2 w-full rounded-[var(--radius-md)] py-3 text-sm font-medium text-white transition-colors hover:opacity-90"
-              style={{ backgroundColor: '#6D6D6D' }}
+              style={{ backgroundColor: '#646940' }}
             >
               Save
             </button>
@@ -507,28 +504,24 @@ export default function WhiskeyManagement() {
               className="flex min-h-[280px] flex-1 flex-col items-center justify-center gap-2 rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--color-border)] bg-[#FAFAFA] p-6"
               style={{ borderColor: '#D0D0D0' }}
             >
-              <svg className="h-12 w-12 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
+              <img src={uploadImg} alt="" className="h-10 w-10 shrink-0 object-contain" aria-hidden />
               <p className="text-sm font-medium text-[var(--color-text-strong)]">Upload photo or video</p>
               <p className="text-sm text-[var(--color-text)]">OR</p>
-              <p className="text-sm text-[var(--color-text)]">Copy photo or video here</p>
+              <p className="text-sm italic text-[var(--color-text)]">Copy photo or video here</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Whiskey of the Month tab */}
-      {activeTab === 'wom' && (
+        {/* Whiskey of the Month tab */}
+        {activeTab === 'wom' && (
         <div className="flex min-w-0 flex-1 flex-col gap-6">
           {/* Current WOM */}
           <div className="shrink-0">
             <h2 className="mb-3 text-base font-bold text-[var(--color-text-strong)]">Current WOM</h2>
             <div className="flex gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[#F4F4F4] p-4">
-              <div className="flex h-[180px] w-[240px] shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[#E0E0E0] text-[var(--color-text)]">
-                <svg className="h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 002.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
+              <div className="flex h-[180px] w-[240px] shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[#E0E0E0]">
+                <img src={imageImg} alt="" className="h-16 w-16 object-contain" />
               </div>
               <div className="flex min-w-0 flex-1 flex-col justify-center gap-1 text-sm">
                 <div className="font-bold text-[var(--color-text-strong)]">{CURRENT_WOM.name}</div>
@@ -685,6 +678,8 @@ export default function WhiskeyManagement() {
           </div>
         </div>
       )}
+
+      </div>
 
       {/* Add new category modal */}
       {isAddCategoryOpen && (

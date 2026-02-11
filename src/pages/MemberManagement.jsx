@@ -318,7 +318,7 @@ export default function MemberManagement() {
                           phone: selectedMember.phone,
                         })
                         setIsEditAccountOpen(true)
-                      }}
+                      }} 
                       className="rounded p-1.5 text-[var(--color-text)] hover:bg-[#F4F4F4]"
                       aria-label="Edit member"
                     >

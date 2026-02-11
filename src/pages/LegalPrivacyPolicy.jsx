@@ -61,7 +61,7 @@ export default function LegalPrivacyPolicy() {
           <ul className="list-disc space-y-1 pl-6 text-sm leading-relaxed text-[var(--color-text-strong)]">
             <li>While your account is active</li>
             <li>As required for legal, accounting, or security purposes</li>
-          </ul>
+            </ul>
         </section>
 
         <section>
